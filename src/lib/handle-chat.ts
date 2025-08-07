@@ -7,21 +7,34 @@ const chatResponseSchema = z.object({
   transactionBytes: z.string().optional(),
 });
 
-export async function handleChatRequest(body: ChatRequest) {
-  const response = await fetch('/api/chat', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  });
-  const rawData = await response.json();
-  return chatResponseSchema.parse(rawData);
+export type ChatResponse = z.infer<typeof chatResponseSchema>;
+
+export async function handleChatRequest(body: ChatRequest): Promise<ChatResponse> {
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Network response was not ok: ${errorText}`);
+    }
+
+    const rawData = await response.json();
+    return chatResponseSchema.parse(rawData);
+  } catch (error) {
+    console.error('There was a problem with the fetch operation:', error);
+    throw error;
+  }
 }
 
 export function useHandleChat() {
-  return useMutation({
+  return useMutation<ChatResponse, Error, ChatRequest>({
     mutationKey: ['handle-ai-chat'],
-    mutationFn: (data: ChatRequest) => handleChatRequest(data),
+    mutationFn: handleChatRequest,
   });
 }
