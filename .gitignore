@@ -43,9 +43,14 @@ yarn-error.log*
 next-env.d.ts
 
 # Foundry (Forge)
+# Project-level artifacts
 /cache/
 /broadcast/
 .forge-snapshots
+# Vendor libs artifacts (if any)
+lib/**/cache/
+lib/**/broadcast/
+lib/**/out/
 
 # Hardhat (optional)
 /artifacts/
@@ -62,3 +67,5 @@ lcov.info
 # OS/Editor
 Thumbs.db
 .vscode/
+lib/openzeppelin-contracts/test/
+lib/openzeppelin-contracts/
