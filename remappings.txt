@@ -1,0 +1,1 @@
+remappings = [\n  "@openzeppelin/=lib/openzeppelin-contracts/",\n  "forge-std/=lib/forge-std/src/"\n]
