@@ -41,3 +41,24 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Foundry (Forge)
+/cache/
+/broadcast/
+.forge-snapshots
+
+# Hardhat (optional)
+/artifacts/
+/typechain-types/
+
+# Solidity coverage
+coverage.json
+lcov.info
+
+# direnv
+.direnv/
+.envrc
+
+# OS/Editor
+Thumbs.db
+.vscode/
